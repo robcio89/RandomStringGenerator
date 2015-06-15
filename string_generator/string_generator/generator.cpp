@@ -44,7 +44,6 @@ bool generator::generate(std::string file_name, unsigned int times)
 		while (times--)
 		{
 			myfile << generate_string(rand() % size);
-			myfile << " ";
 		}
 		myfile.close();
 		return true;
