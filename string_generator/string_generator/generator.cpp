@@ -39,15 +39,16 @@ bool generator::generate(std::string file_name, unsigned int times)
 	std::string str;
 	srand(time(NULL));
 
-	if (myfile.is_open())
+	if (!myfile.is_open())
 	{
-		while (times--)
-		{
-			myfile << generate_string(rand() % size);
-		}
-		myfile.close();
-		return true;
+		return false;
 	}
-	else
-		false;
+
+	while (times--)
+	{
+		myfile << generate_string(rand() % size);
+	}
+	myfile.close();
+
+	return true;
 }
