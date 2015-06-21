@@ -11,7 +11,6 @@ public:
 
 private:
 	std::string generate_string(size_t length);
-	size_t size = 63;
-
+	size_t size{ 63 };
 };
 

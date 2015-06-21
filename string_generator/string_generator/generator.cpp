@@ -1,8 +1,7 @@
 #include "generator.h"
-#include <random>
 #include <algorithm>
 #include <fstream>
-#include <time.h>
+#include <random>
 
 generator::generator()
 {
@@ -15,6 +14,10 @@ generator::~generator()
 
 std::string generator::generate_string(size_t length)
 {
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> dist(1, size);
+
 	auto randchar = []() -> char
 	{
 		const char charset[] =
@@ -22,7 +25,7 @@ std::string generator::generate_string(size_t length)
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 			"abcdefghijklmnopqrstuvwxyz";
 		const size_t max_index = (sizeof(charset) - 1);
-		return charset[rand() % max_index];
+		return charset[ rand() % max_index];
 	};
 	std::string str(length, 0);
 	std::generate_n(str.begin(), length, randchar);
@@ -31,13 +34,16 @@ std::string generator::generate_string(size_t length)
 
 bool generator::generate(std::string file_name, unsigned int times)
 {
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> dist(1, size);
+
 	if (file_name.empty())
 		false;
 	
 	std::ofstream myfile(file_name);
 
 	std::string str;
-	srand(time(NULL));
 
 	if (!myfile.is_open())
 	{
@@ -46,7 +52,7 @@ bool generator::generate(std::string file_name, unsigned int times)
 
 	while (times--)
 	{
-		myfile << generate_string(rand() % size);
+		myfile << generate_string(dist(mt));
 	}
 	myfile.close();
 
